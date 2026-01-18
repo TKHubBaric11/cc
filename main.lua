@@ -1,14 +1,56 @@
+--[[ 
+    BANANA CAT HUB - PHIÊN BẢN ĐÃ SỬA LỖI (ANTI-KICK)
+    - Đã giảm TweenSpeed để tránh bị server kick.
+    - Đã gỡ bỏ lệnh tự Shutdown.
+    - Đã tối ưu hệ thống chống AFK.
+]]
 
 local vu1 = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local v2 = vu1:CreateWindow({
-    ["Title"] = "Banana Cat Hub-Blox Fruit [ Free ]",
-    ["SubTitle"] = "By KimP Roblox",
+    ["Title"] = "Banana Cat Hub-Blox Fruit [ FIXED ]",
+    ["SubTitle"] = "By KimP Roblox - Optimized by AI",
     ["TabWidth"] = 160,
     ["Theme"] = "Darker",
     ["Acrylic"] = false,
     ["Size"] = UDim2.fromOffset(500, 320),
     ["MinimizeKey"] = Enum.KeyCode.End
 })
+
+-- TỐC ĐỘ DI CHUYỂN AN TOÀN (Gốc 350 -> Đã sửa 225)
+_G.TweenSpeed = 225
+
+-- HỆ THỐNG CHỐNG AFK AN TOÀN (Không dùng VirtualUser gây Kick)
+if getgenv().AntiAfkExecuted then return end
+getgenv().AntiAfkExecuted = true
+game:GetService("Players").LocalPlayer.Idled:Connect(function()
+    local VirtualInputManager = game:GetService("VirtualInputManager")
+    VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.RightControl, false, game)
+    task.wait(0.1)
+    VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.RightControl, false, game)
+end)
+
+-- KIỂM TRA SEA (Đã xóa lệnh game:Shutdown gây văng game)
+local v5 = game.PlaceId
+local Sea1, Sea2, Sea3 = false, false, false
+if v5 == 2753915549 then Sea1 = true
+elseif v5 == 4442272183 then Sea2 = true
+elseif v5 == 7449423635 then Sea3 = true
+else warn("Vùng biển hiện tại không được hỗ trợ chính thức!") end
+
+-- HÀM TWEEN TỐI ƯU
+function Tween(targetCFrame)
+    local Character = game.Players.LocalPlayer.Character
+    if not Character or not Character:FindFirstChild("HumanoidRootPart") then return end
+    local distance = (targetCFrame.Position - Character.HumanoidRootPart.Position).Magnitude
+    local speed = _G.TweenSpeed
+    local info = TweenInfo.new(distance / speed, Enum.EasingStyle.Linear)
+    local tween = game:GetService("TweenService"):Create(Character.HumanoidRootPart, info, {CFrame = targetCFrame})
+    tween:Play()
+    return tween
+end
+
+-- TIẾP TỤC DÁN TOÀN BỘ PHẦN TAB MENU VÀ LOGIC FARM CỦA BẠN VÀO DƯỚI ĐÂY --
+
 local vu3 = {
     ["Info"] = v2:AddTab({
         ["Title"] = "Tab Information"
