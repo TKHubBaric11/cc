@@ -1,3 +1,5 @@
+repeat task.wait() until game:IsLoaded()
+task.wait(3)
 local vu1 = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local v2 = vu1:CreateWindow({
     ["Title"] = "Banana Cat Hub-Blox Fruit [ Free ]",
@@ -64,14 +66,7 @@ elseif v5 == 4442272183 then
 elseif v5 == 7449423635 then
     Sea3 = true
 else
-    game:Shutdown()
-end
-game:GetService("Players").LocalPlayer.Idled:connect(function()
-    game:GetService("VirtualUser"):Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
-    wait()
-    game:GetService("VirtualUser"):Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
-end)
-Sea1 = false
+    Sea1 = false
 Sea2 = false
 Sea3 = false
 local v6 = game.PlaceId
