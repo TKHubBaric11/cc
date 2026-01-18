@@ -1,20 +1,15 @@
--- ========= TK HUB KEY SYSTEM =========
+-- ===== TK HUB KEY SYSTEM (SAFE) =====
 local CORRECT_KEY = "kietsebeo"
--- ====================================
+-- ===================================
 
-if not game:IsLoaded() then
-    game.Loaded:Wait()
-end
+-- đợi game load hoàn toàn
+repeat task.wait() until game:IsLoaded()
 
-if getgenv().TK_KEY == nil then
-    warn("❌ Chưa nhập key!")
+-- check key
+if getgenv().TK_KEY ~= CORRECT_KEY then
+    warn("Sai key hoặc chưa nhập key!")
     return
 end
 
-if tostring(getgenv().TK_KEY) ~= CORRECT_KEY then
-    warn("❌ Sai key!")
-    return
-end
-
--- đúng key -> load main
+-- load main script
 loadstring(game:HttpGet("https://raw.githubusercontent.com/TKHubBaric11/cc/main/main.lua"))()
